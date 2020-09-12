@@ -1,8 +1,14 @@
-from django.urls import path
-from ads.views import *
+from rest_framework import routers
+
+from django.urls import path, include
+
+from .views import AdViewSet, PhotoUploadView
+
+
+router = routers.DefaultRouter()
+router.register(r"ads", AdViewSet, basename="ads")
 
 urlpatterns = [
-    path('ad/create/', AdCreateView.as_view()),
-    path('all/', AdsListView.as_view()),
-    path('ad/create/<int:pk>', AdDetailView.as_view()),
+    path("", include(router.urls)),
+    path("photo/", PhotoUploadView.as_view(), name='photo')
 ]
